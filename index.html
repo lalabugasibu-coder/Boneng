@@ -2,70 +2,79 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lalabu Donat Production</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Tabel Produksi Donat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fffaf5;
+      margin: 20px;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      color: #d35400;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #e67e22;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+  </style>
 </head>
 <body>
+  <h2>Data Produksi Donat</h2>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+        <th>ODP</th>
+        <th>Buffer</th>
+        <th>Frozen</th>
+        <th>Total Produksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-  <!-- HEADER -->
-  <header class="hero">
-    <div class="overlay">
-      <h1 class="brand">LALABU</h1>
-      <p class="subtitle">Adonan Produksi Donat Hari Ini</p>
-      <h2 class="today-weight">92 KG</h2>
-    </div>
-  </header>
+  <script>
+    async function loadData() {
+      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDI9BvOehdIs5sJTZcj2OTE34FooIxe6UE4ITr1SQaGB5Mz6UO6X9lVRnXo9asrpU_7p_qQXaTQ7oI/pub?gid=1010468736&single=true&output=csv";
+      const response = await fetch(url);
+      const data = await response.text();
 
-  <!-- SECTION GOLD & FROZEN -->
-  <section class="categories">
-    <div class="category gold">
-      <h2>GOLD</h2>
-      <p>Donat Matang</p>
-    </div>
-    <div class="category frozen">
-      <h2>FROZEN</h2>
-      <p>Donat Beku</p>
-    </div>
-  </section>
+      const rows = data.split("\n").map(r => r.split(","));
+      const tbody = document.querySelector("#dataTable tbody");
 
-  <!-- TABEL PRODUKSI -->
-  <section class="table-section">
-    <h2>Data Produksi</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Tanggal</th>
-          <th>ODP</th>
-          <th>Buffer</th>
-          <th>Frozen</th>
-          <th>Total Produksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>27 Agustus 2025</td>
-          <td>250</td>
-          <td>50</td>
-          <td>100</td>
-          <td>400</td>
-        </tr>
-        <tr>
-          <td>28 Agustus 2025</td>
-          <td>300</td>
-          <td>60</td>
-          <td>120</td>
-          <td>480</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+      rows.slice(1).forEach(row => {
+        if (row.length > 1) {
+          const tr = document.createElement("tr");
+          row.forEach(cell => {
+            const td = document.createElement("td");
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        }
+      });
+    }
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2025 Lalabu Donat. All Rights Reserved.</p>
-  </footer>
-
+    loadData();
+  </script>
 </body>
 </html>
-
