@@ -1,36 +1,82 @@
+/* ===== Global Styles ===== */
 body {
-  font-family: Arial, sans-serif;
-  background: #fffaf5;
-  margin: 20px;
-  color: #333;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #1b2d2d, #223a3a);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* ===== Heading ===== */
+h1 {
+  margin-top: 20px;
+  font-size: 42px;
+  font-weight: 700;
+  color: #ffcc00;
+  letter-spacing: 2px;
 }
 
 h2 {
-  text-align: center;
-  color: #d35400;
+  margin: 5px 0 20px;
+  font-size: 22px;
+  font-weight: 500;
+  color: #ddd;
 }
 
+/* ===== Highlight Number ===== */
+.highlight-number {
+  font-size: 72px;
+  font-weight: bold;
+  color: #ffcc00;
+  margin: 10px 0 30px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ===== Table Styles ===== */
 table {
+  margin: 0 auto 40px;
   border-collapse: collapse;
-  width: 100%;
-  margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  background: #fff;
+  background: #2d4646;
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 700px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-}
-
-th {
-  background: #e67e22;
-  color: white;
+thead th {
+  background: #3b5f5f;
+  color: #fff;
+  padding: 14px 20px;
+  font-size: 18px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-tr:nth-child(even) {
-  background: #f9f9f9;
+tbody td {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 18px;
+  font-size: 17px;
+  color: #f5f5f5;
 }
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  table {
+    min-width: auto;
+    width: 95%;
+    font-size: 14px;
+  }
+  thead th, tbody td {
+    padding: 10px;
+  }
+  .highlight-number {
+    font-size: 48px;
+  }
+}
+
