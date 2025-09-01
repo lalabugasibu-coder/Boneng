@@ -2,47 +2,76 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Tabel Produksi Donat</title>
-  <link rel="stylesheet" href="style.css">
+  <title>LALABU Produksi Donat</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1f3b3b;
+      color: white;
+      text-align: center;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      background: #244;
+      color: white;
+      font-size: 18px;
+    }
+    th, td {
+      border: 1px solid white;
+      padding: 10px 20px;
+    }
+    th {
+      background: #2f4f4f;
+    }
+  </style>
 </head>
 <body>
-  <h2>Data Produksi Donat</h2>
-  <table id="dataTable">
+  <h1>LALABU</h1>
+  <h2>ADONAN Produksi Donat Hari ini</h2>
+
+  <table>
     <thead>
       <tr>
         <th>Tanggal</th>
         <th>ODP</th>
-        <th>Buffer</th>
-        <th>Frozen</th>
-        <th>Total Produksi</th>
+        <th>BUFFER</th>
+        <th>FROZEN</th>
+        <th>Total Produksi Hari Ini</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="data-body">
+      <tr>
+        <td colspan="5">Loading...</td>
+      </tr>
+    </tbody>
   </table>
 
   <script>
-    async function loadData() {
-      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDI9BvOehdIs5sJTZcj2OTE34FooIxe6UE4ITr1SQaGB5Mz6UO6X9lVRnXo9asrpU_7p_qQXaTQ7oI/pub?gid=1010468736&single=true&output=csv";
-      const response = await fetch(url);
-      const data = await response.text();
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRDI9BvOehdIs5sJTZcj2OTE34FooIxe6UE4ITr1SQaGB5Mz6UO6X9lVRnXo9asrpU_7p_qQXaTQ7oI/pub?gid=1010468736&single=true&output=csv";
 
-      const rows = data.split("\n").map(r => r.split(","));
-      const tbody = document.querySelector("#dataTable tbody");
+    async function loadLatestRow() {
+      const res = await fetch(csvUrl);
+      const text = await res.text();
+      const rows = text.trim().split("\n").map(r => r.split(","));
 
-      rows.slice(1).forEach(row => {
-        if (row.length > 1) {
-          const tr = document.createElement("tr");
-          row.forEach(cell => {
-            const td = document.createElement("td");
-            td.textContent = cell;
-            tr.appendChild(td);
-          });
-          tbody.appendChild(tr);
-        }
-      });
+      // Ambil row terakhir (setelah header)
+      const lastRow = rows[rows.length - 1];
+
+      // Isi tabel
+      const tbody = document.getElementById("data-body");
+      tbody.innerHTML = `
+        <tr>
+          <td>${lastRow[0]}</td>
+          <td>${lastRow[1]}</td>
+          <td>${lastRow[2]}</td>
+          <td>${lastRow[3]}</td>
+          <td>${lastRow[4]}</td>
+        </tr>
+      `;
     }
 
-    loadData();
+    loadLatestRow();
   </script>
 </body>
 </html>
